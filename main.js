@@ -1,5 +1,5 @@
 /* global createCanvas, keyIsDown, random, clear, fill, strokeWeight, stroke, rect, frameRate, resizeCanvas  */
-/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height */
+/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height, touches */
 
 let position = { x: (window.innerWidth / 2) - 25, y: (window.innerHeight / 2) - 25 }
 let modifiers = { x: 10, y: -10, color: [3, 3, 3] }
@@ -8,6 +8,7 @@ let gravity = 0.5
 let pristine = true
 let color = [255, 0, 0]
 let debug = false
+let change = 1
 
 function setup () {
   createCanvas(window.innerWidth, window.innerHeight)
@@ -19,10 +20,17 @@ function draw () {
   if (keyIsDown(SHIFT) && keyIsDown(68)) debug = false
 
   // accelerate on keyboard input
-  if (keyIsDown(LEFT_ARROW)) modifiers.x -= 1
-  if (keyIsDown(RIGHT_ARROW)) modifiers.x += 1
-  if (keyIsDown(UP_ARROW)) modifiers.y -= 1
-  if (keyIsDown(DOWN_ARROW)) modifiers.y += 1
+  if (keyIsDown(LEFT_ARROW)) modifiers.x -= change
+  if (keyIsDown(RIGHT_ARROW)) modifiers.x += change
+  if (keyIsDown(UP_ARROW)) modifiers.y -= change
+  if (keyIsDown(DOWN_ARROW)) modifiers.y += change
+
+  if (touches[0]) {
+    if (position.x > touches[0].x) modifiers.x -= 1
+    if (position.x < touches[0].x) modifiers.x += 1
+    if (position.y > touches[0].y) modifiers.y -= 1
+    if (position.y < touches[0].y) modifiers.y += 1
+  }
 
   // remove pristine status if arrow key is pressed.
   // if (pristine) before the rest makes the statement
