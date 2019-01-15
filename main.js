@@ -16,8 +16,12 @@ function setup () {
 
 function draw () {
   if (keyIsDown(67)) clear() // c
+  if (touches.length === 2) clear()
+
   if (keyIsDown(68)) debug = true // d
   if (keyIsDown(SHIFT) && keyIsDown(68)) debug = false
+  if (touches.length === 3) debug = true
+  if (touches.length === 4) debug = false
 
   // accelerate on keyboard input
   if (keyIsDown(LEFT_ARROW)) modifiers.x -= change
@@ -30,6 +34,7 @@ function draw () {
     if (position.x < touches[0].x) modifiers.x += 1
     if (position.y > touches[0].y) modifiers.y -= 1
     if (position.y < touches[0].y) modifiers.y += 1
+    pristine = false
   }
 
   // remove pristine status if arrow key is pressed.
@@ -115,10 +120,10 @@ function draw () {
   }
   document.getElementById('status').innerHTML =
     `${debug ? document.getElementById('status').innerHTML : ''}
-       ${pristine ? 'Use the arrow keys to control the square' : ''}<br/>
-       ${pristine ? 'press c to clear the screen' : ''}<br/>
-       ${pristine ? 'press d to display debug' : ''}<br/>
-       ${pristine ? 'press shift+d to hide debug' : ''}`
+       ${pristine ? 'Use the arrow keys, or a touch screen to control the square' : ''}<br/>
+       ${pristine ? 'press c or two fingers to clear the screen' : ''}<br/>
+       ${pristine ? 'press d or three fingers to display debug' : ''}<br/>
+       ${pristine ? 'press shift+d or four fingers to hide debug' : ''}`
 }
 
 function windowResized () {
