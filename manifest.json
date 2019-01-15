@@ -1,0 +1,10 @@
+{
+  "name": "Bouncyboi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "offline_enabled": true,
+  "description": "A box that bounce around, because I was bored...",
+  "lang": "en",
+}
