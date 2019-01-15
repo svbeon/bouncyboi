@@ -1,16 +1,17 @@
 /* global createCanvas, keyIsDown, random, clear, fill, strokeWeight, stroke, rect, frameRate, resizeCanvas  */
-/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height, touches */
+/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height, touches, mouseIsPressed, mouseX, mouseY */
 
 let position = { x: (window.innerWidth / 2) - 25, y: (window.innerHeight / 2) - 25 }
 let modifiers = { x: 10, y: -10, color: [3, 3, 3] }
 let frictions = { x: -0.8, y: -0.8 }
-let gravity = 0.5
+let gravity = 0.25
 let pristine = true
 let color = [255, 0, 0]
 let debug = false
-let change = 1
+let change = 0.5
 
 function setup () {
+  frameRate(60)
   createCanvas(window.innerWidth, window.innerHeight)
 }
 
@@ -29,12 +30,20 @@ function draw () {
   if (keyIsDown(UP_ARROW)) modifiers.y -= change
   if (keyIsDown(DOWN_ARROW)) modifiers.y += change
 
+  // accelerate on touch input
   if (touches[0]) {
-    if (position.x > touches[0].x) modifiers.x -= 1
-    if (position.x < touches[0].x) modifiers.x += 1
-    if (position.y > touches[0].y) modifiers.y -= 1
-    if (position.y < touches[0].y) modifiers.y += 1
-    pristine = false
+    if (position.x > touches[0].x) modifiers.x -= change
+    if (position.x < touches[0].x) modifiers.x += change
+    if (position.y > touches[0].y) modifiers.y -= change
+    if (position.y < touches[0].y) modifiers.y += change
+  }
+
+  // accelerate on mouse input
+  if (mouseIsPressed) {
+    if (position.x > mouseX) modifiers.x -= change
+    if (position.x < mouseX) modifiers.x += change
+    if (position.y > mouseY) modifiers.y -= change
+    if (position.y < mouseY) modifiers.y += change
   }
 
   // remove pristine status if arrow key is pressed.
@@ -44,7 +53,9 @@ function draw () {
     (keyIsDown(UP_ARROW) ||
     keyIsDown(DOWN_ARROW) ||
     keyIsDown(LEFT_ARROW) ||
-    keyIsDown(RIGHT_ARROW))) {
+    keyIsDown(RIGHT_ARROW) ||
+    mouseIsPressed ||
+    touches.length > 0)) {
     pristine = false
   }
 
@@ -116,13 +127,15 @@ function draw () {
        vx: ${modifiers.x}, vy: ${modifiers.y}<br/>
        color: [${color.join(', ')}]<br/>
        color modifiers: [${modifiers.color.join(', ')}]<br/>
-       fps: ${frameRate()}<br/>`
+       fps: ${frameRate()}<br/>
+       touches: ${JSON.stringify(touches)}<br/>
+       mousePressed: ${mouseIsPressed}, x: ${mouseX}, y: ${mouseY}`
   }
   document.getElementById('status').innerHTML =
     `${debug ? document.getElementById('status').innerHTML : ''}
-       ${pristine ? 'Use the arrow keys, or a touch screen to control the square' : ''}<br/>
-       ${pristine ? 'press c or two fingers to clear the screen' : ''}<br/>
-       ${pristine ? 'press d or three fingers to display debug' : ''}<br/>
+       ${pristine ? 'Use the arrow keys, or a touch screen to control the square<br/>' : ''}
+       ${pristine ? 'press c or two fingers to clear the screen<br/>' : ''}
+       ${pristine ? 'press d or three fingers to display debug<br/>' : ''}
        ${pristine ? 'press shift+d or four fingers to hide debug' : ''}`
 }
 
