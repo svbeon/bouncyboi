@@ -7,12 +7,15 @@ body {
   overflow: hidden;
 }
 
-div {
+pre {
   font-family: 'Ubuntu Mono', monospace;
   color: white;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
 }
 
 canvas {

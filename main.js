@@ -121,22 +121,22 @@ function draw () {
   rect(position.x, position.y, 50, 50) // `rgb(${color.join(', ')})`
 
   // status
+  let status = document.getElementById('status')
+  status.innerHTML = ''
   if (debug) {
-    document.getElementById('status').innerHTML =
-      `x: ${position.x}, y: ${position.y}<br/>
-       vx: ${modifiers.x}, vy: ${modifiers.y}<br/>
-       color: [${color.join(', ')}]<br/>
-       color modifiers: [${modifiers.color.join(', ')}]<br/>
-       fps: ${frameRate()}<br/>
-       touches: ${JSON.stringify(touches)}<br/>
-       mousePressed: ${mouseIsPressed}, x: ${mouseX}, y: ${mouseY}`
+    status.innerHTML += `x: ${position.x}, y: ${position.y}\n`
+    status.innerHTML += `vx: ${modifiers.x}, vy: ${modifiers.y}\n`
+    status.innerHTML += `color: [${color.join(', ')}]\n`
+    status.innerHTML += `color modifiers: [${modifiers.color.join(', ')}]\n`
+    status.innerHTML += `fps: ${frameRate()}\n`
+    status.innerHTML += `touches: [${touches.map(touch => `\n  x: ${touch.x}, y: ${touch.y}`).join('')}${touches.length ? '\n' : ''}]\n`
+    status.innerHTML += `mousePressed: ${mouseIsPressed}\n`
+    status.innerHTML += `mX: ${mouseX}, mY: ${mouseY}\n`
   }
-  document.getElementById('status').innerHTML =
-    `${debug ? document.getElementById('status').innerHTML : ''}
-       ${pristine ? 'Use the arrow keys, or a touch screen to control the square<br/>' : ''}
-       ${pristine ? 'press c or two fingers to clear the screen<br/>' : ''}
-       ${pristine ? 'press d or three fingers to display debug<br/>' : ''}
-       ${pristine ? 'press shift+d or four fingers to hide debug' : ''}`
+  status.innerHTML += `${pristine ? 'Use the arrow keys, or a touch screen to control the square' : ''}\n`
+  status.innerHTML += `${pristine ? 'press c or two fingers to clear the screen' : ''}\n`
+  status.innerHTML += `${pristine ? 'press d or three fingers to display debug' : ''}\n`
+  status.innerHTML += `${pristine ? 'press shift+d or four fingers to hide debug' : ''}\n`
 }
 
 function windowResized () {
