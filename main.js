@@ -1,8 +1,7 @@
 /* global createCanvas, keyIsDown, random, clear, fill, strokeWeight, stroke, rect, frameRate, resizeCanvas  */
-/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW */
+/* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height */
 
-let canvas = { width: window.innerWidth, height: window.innerHeight }
-let position = { x: canvas.width / 2, y: canvas.height / 2 }
+let position = { x: (window.innerWidth / 2) - 25, y: (window.innerHeight / 2) - 25 }
 let modifiers = { x: 10, y: -10, color: [3, 3, 3] }
 let frictions = { x: -0.8, y: -0.8 }
 let gravity = 0.5
@@ -11,7 +10,7 @@ let color = [255, 0, 0]
 let debug = false
 
 function setup () {
-  createCanvas(canvas.width, canvas.height)
+  createCanvas(window.innerWidth, window.innerHeight - 20)
 }
 
 function draw () {
@@ -42,7 +41,7 @@ function draw () {
   // small that it'd stay still
   if (modifiers.y >= gravity * -frictions.y ||
     modifiers.y <= gravity * frictions.y ||
-    position.y < canvas.height - 50) {
+    position.y < height - 50) {
     modifiers.y += gravity
   }
 
@@ -57,13 +56,13 @@ function draw () {
     if (keyIsDown(LEFT_ARROW)) modifiers.x = 0
     modifiers.x *= frictions.x
   }
-  if (position.x >= canvas.width - 50) {
-    position.x = canvas.width - 50
+  if (position.x >= width - 50) {
+    position.x = width - 50
     if (keyIsDown(RIGHT_ARROW)) modifiers.x = 0
     modifiers.x *= frictions.x
   }
   // slowly stopp the ball if it slides on the floor
-  if (position.y >= canvas.height - 50) modifiers.x *= -frictions.x
+  if (position.y >= height - 50) modifiers.x *= -frictions.x
   // stop moving entirely if the velocity is really small
   if (modifiers.x < gravity * -frictions.x &&
     modifiers.x > gravity * frictions.x) modifiers.x = 0
@@ -74,8 +73,8 @@ function draw () {
     modifiers.y = 0
   } */
   // bounce box if it touches the floor
-  if (position.y >= canvas.height - 50) {
-    position.y = canvas.height - 50
+  if (position.y >= height - 50) {
+    position.y = height - 50
     if (keyIsDown(DOWN_ARROW)) modifiers.y *= -frictions.y
     modifiers.y *= frictions.y
   }
@@ -115,7 +114,5 @@ function draw () {
 }
 
 function windowResized () {
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-  resizeCanvas(canvas.width, canvas.height)
+  resizeCanvas(window.innerWidth, window.innerHeight - 20)
 }
