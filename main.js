@@ -1,4 +1,4 @@
-/* global createCanvas, keyIsDown, random, clear, fill, strokeWeight, stroke, rect, frameRate, resizeCanvas  */
+/* global createCanvas, keyIsDown, random, clear, fill, strokeWeight, stroke, rect, frameRate, resizeCanvas, abs  */
 /* global SHIFT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, width, height, touches, mouseIsPressed, mouseX, mouseY */
 
 let position = { x: (window.innerWidth / 2) - 25, y: (window.innerHeight / 2) - 25 }
@@ -30,20 +30,12 @@ function draw () {
   if (keyIsDown(UP_ARROW)) modifiers.y -= change
   if (keyIsDown(DOWN_ARROW)) modifiers.y += change
 
-  // accelerate on touch input
-  if (touches[0]) {
-    if (position.x > touches[0].x) modifiers.x -= change
-    if (position.x < touches[0].x) modifiers.x += change
-    if (position.y > touches[0].y) modifiers.y -= change
-    if (position.y < touches[0].y) modifiers.y += change
-  }
-
-  // accelerate on mouse input
+  // accelerate on mouse and touch input
   if (mouseIsPressed) {
-    if (position.x > mouseX) modifiers.x -= change
-    if (position.x < mouseX) modifiers.x += change
-    if (position.y > mouseY) modifiers.y -= change
-    if (position.y < mouseY) modifiers.y += change
+    if (position.x + 25 > mouseX + 50 && abs(position.x - mouseX) > abs(position.y - mouseY)) modifiers.x -= change
+    if (position.x + 25 < mouseX - 50 && abs(position.x - mouseX) > abs(position.y - mouseY)) modifiers.x += change
+    if (position.y + 25 > mouseY + 50 && abs(position.y - mouseY) > abs(position.x - mouseX)) modifiers.y -= change
+    if (position.y + 25 < mouseY - 50 && abs(position.y - mouseY) > abs(position.x - mouseX)) modifiers.y += change
   }
 
   // remove pristine status if arrow key is pressed.
