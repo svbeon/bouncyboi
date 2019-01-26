@@ -24,9 +24,10 @@ canvas {
   left: 0;
 }
 
-ins {
+.sovrn_ad_unit {
   position: absolute;
   bottom: 0;
   width: 100% !important;
+  overflow-x: hidden;
   /* background: #ccc; */
 }
