@@ -80,9 +80,18 @@ main {
   margin: 0;
 }
 
-p, h3 {
+p, h3, .rating {
   max-width: 600px;
   margin: .5em auto;
+}
+
+a {
+  color: #008499;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3baec4;
 }
 
 h3 {
@@ -122,4 +131,34 @@ ins {
   left: 0;
   right: 0;
   overflow: hidden;
+}
+
+.rating {
+  display: block;
+}
+
+.rating:before {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 1.5em;
+  color: #e52;
+  display: block;
+}
+
+.rating.five:before {
+  content: '\2605 \2605 \2605 \2605 \2605 ';
+}
+.rating.four:before {
+  content: '\2605 \2605 \2605 \2605 \2606 ';
+}
+.rating.three:before {
+  content: '\2605 \2605 \2605 \2606 \2606 ';
+}
+.rating.two:before {
+  content: '\2605 \2605 \2606 \2606 \2606 ';
+}
+.rating.one:before {
+  content: '\2605 \2606 \2606 \2606 \2606 ';
+}
+.rating.zero:before {
+  content: '\2606 \2606 \2606 \2606 \2606 ';
 }
