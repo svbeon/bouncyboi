@@ -13,18 +13,22 @@ body.started {
 
 * {
   font-family: 'PT Sans', sans-serif;
+  box-sizing: border-box;
 }
 
 header {
   margin: 0;
   width: 100%;
-  height: 100vh;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: var(--vh, 100vh);
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+  /* padding-bottom: 50%; */
+  padding-top: 1em;
 }
 
 .started header {
@@ -44,10 +48,11 @@ h1 {
     -1px 1px 0 #000,
      1px 1px 0 #000;
   font-size: 4em;
+  margin: 0;
 }
 
 img {
-  max-width: 33vh;
+  max-width: 40%;
   display: block;
   margin:  auto;
 }
@@ -80,9 +85,10 @@ main {
   margin: 0;
 }
 
-p, h3, .rating {
+p, h2, h3, .rating {
   max-width: 600px;
   margin: .5em auto;
+  white-space: normal;
 }
 
 a {
@@ -125,11 +131,13 @@ canvas {
 }
 
 ins {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  max-width: 600px;
+  margin: auto;
+  /* bottom: 0; */
+  /* left: 0; */
+  /* right: 0; */
   overflow: hidden;
   background: rgba(255, 255, 255, .7);
 }

@@ -26,6 +26,7 @@ function draw () {
     if (keyIsDown(SHIFT) && keyIsDown(68)) debug = false
     if (touches.length === 3) debug = true
     if (touches.length === 4) debug = false
+    if (touches.length === 5) pauseGame()
 
     // accelerate on keyboard input
     if (keyIsDown(LEFT_ARROW)) modifiers.x -= change
@@ -150,3 +151,15 @@ function pauseGame () {
   started = false
   document.getElementsByTagName('body')[0].classList.remove('started')
 }
+
+// First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+let vh = window.innerHeight
+// Then we set the value in the --vh custom property to the root of the document
+document.documentElement.style.setProperty('--vh', `${vh}px`)
+
+// We listen to the resize event
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  let vh = window.innerHeight
+  document.documentElement.style.setProperty('--vh', `${vh}`)
+})
